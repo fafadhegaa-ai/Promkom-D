@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promkom-D | Sistem Absensi GPS Pintar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 28px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            gap: 50px;
+        }
+
+        .hero-content {
+            flex: 1;
+            color: white;
+            animation: slideInLeft 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .hero p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        .hero-features {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-tag i {
+            font-size: 16px;
+        }
+
+        .btn-cta {
+            padding: 15px 40px;
+            font-size: 16px;
+            margin-right: 15px;
+        }
+
+        .hero-visual {
+            flex: 1;
+            animation: slideInRight 0.8s ease;
+            position: relative;
+        }
+
+        .phone-mockup {
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+            position: relative;
+            filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.3));
+        }
+
+        .phone-frame {
+            background: white;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .phone-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 35px;
+            padding: 30px 20px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-screen::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+        }
+
+        .phone-screen::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            bottom: -30px;
+            left: -30px;
+        }
+
+        .phone-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .phone-content i {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .phone-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .phone-content p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 50px;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid #f0f0f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #667eea;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin: 0 auto 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Tech Stack Section */
+        .tech-stack {
+            padding: 80px 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tech-stack .section-header h2,
+        .tech-stack .section-header p {
+            color: white;
+        }
+
+        .tech-stack .section-header p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .tech-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .tech-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .tech-card p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        /* Database Section */
+        .database {
+            padding: 80px 50px;
+            background: white;
+        }
+
+        .database-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .db-table {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .db-table:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .db-table i {
+            font-size: 32px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .db-table h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .db-table p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* Security Features */
+        .security {
+            padding: 80px 50px;
+            background: #f8f9fb;
+        }
+
+        .security-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .security-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .security-item:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .security-item i {
+            font-size: 28px;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .security-item h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .security-item p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 50px;
+            background: white;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            width: 48%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            text-align: right;
+            padding-right: 50px;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: 52%;
+            text-align: left;
+            padding-left: 50px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 4px solid white;
+            border-radius: 50%;
+            top: 30px;
+        }
+
+        .timeline-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .timeline-content h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .stat-item p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 80px 50px;
+            background: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+                gap: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .hero {
+                flex-direction: column;
+                padding: 30px 20px;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-visual {
+                margin-top: 30px;
+            }
+
+            .features, .tech-stack, .database, .security, 
+            .how-it-works, .stats, .cta {
+                padding: 50px 20px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                margin-left: 0 !important;
+                padding-left: 60px !important;
+                text-align: left !important;
+                padding-right: 0 !important;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .cta h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <i class="fas fa-map-pin"></i>
+            Promkom-D
+        </div>
+        <ul>
+            <li><a href="#features">Fitur</a></li>
+            <li><a href="#security">Keamanan</a></li>
+            <li><a href="#howitworks">Cara Kerja</a></li>
+            <li><a href="#tech">Teknologi</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn btn-secondary">Login</button>
+            <button class="btn btn-primary">Daftar Gratis</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Sistem Absensi GPS Pintar & Aman</h1>
+            <p class="hero-subtitle">Teknologi terdepan untuk monitoring kehadiran yang akurat dan anti-kecurangan</p>
+            <p>Promkom-D menggunakan GPS real-time, verifikasi lokasi pintar, dan audit logging lengkap untuk mencegah fraud dan memastikan integritas data absensi Anda.</p>
+            
+            <div class="hero-features">
+                <div class="feature-tag">
+                    <i class="fas fa-check-circle"></i>
+                    GPS Verification
+                </div>
+                <div class="feature-tag">
+                    <i class="fas fa-lock"></i>
+                    Enterprise Security
+                </div>
+                <div class="feature-tag">
+                    <i class="fas fa-zap"></i>
+                    Real-time Tracking
+                </div>
+                <div class="feature-tag">
+                    <i class="fas fa-chart-line"></i>
+                    Advanced Analytics
+                </div>
+            </div>
+
+            <div>
+                <button class="btn btn-primary btn-cta">
+                    <i class="fas fa-rocket"></i> Mulai Sekarang
+                </button>
+                <button class="btn btn-secondary btn-cta">
+                    <i class="fas fa-video"></i> Lihat Demo
+                </button>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="phone-mockup">
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="phone-content">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h3>Check-in Mudah</h3>
+                            <p>Tap sekali untuk absensi dengan GPS verification otomatis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Fitur Unggulan</h2>
+            <p>Solusi lengkap untuk kebutuhan absensi modern dengan teknologi terkini</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>GPS Verification</h3>
+                <p>Verifikasi lokasi real-time dengan akurasi hingga 10 meter menggunakan Haversine formula</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Anti-Fraud Detection</h3>
+                <p>Deteksi GPS spoofing, impossible movement, dan aktivitas mencurigakan secara otomatis</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3>Real-time Monitoring</h3>
+                <p>Dosen & Admin dapat monitoring absensi mahasiswa secara live dengan peta interaktif</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <h3>Advanced Analytics</h3>
+                <p>Dashboard komprehensif dengan statistik lengkap, laporan bulanan, dan trend analysis</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Enterprise Security</h3>
+                <p>JWT authentication, password hashing, role-based access, dan audit logging menyeluruh</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobile Friendly</h3>
+                <p>Aplikasi responsive yang bekerja sempurna di semua device (iOS, Android, Desktop)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Database Section -->
+    <section class="database" id="database">
+        <div class="section-header">
+            <h2>Database Architecture</h2>
+            <p>9 tabel terstruktur dengan triggers otomatis dan data integrity terjamin</p>
+        </div>
+
+        <div class="database-grid">
+            <div class="db-table">
+                <i class="fas fa-users"></i>
+                <h4>Users</h4>
+                <p>Admin, Dosen, Mahasiswa</p>
+            </div>
+            <div class="db-table">
+                <i class="fas fa-book"></i>
+                <h4>Classes</h4>
+                <p>Kelas dengan GPS coordinates</p>
+            </div>
+            <div class="db-table">
+                <i class="fas fa-user-check"></i>
+                <h4>Enrollments</h4>
+                <p>Enrollment tracking</p>
+            </div>
+            <div class="db-table">
+                <i class="fas fa-clock"></i>
+                <h4>Sessions</h4>
+                <p>Sesi absensi</p>
+            </div>
+            <div class="db-table">
+                <i class="fas fa-clipboard-check"></i>
+                <h4>Attendance</h4>
+                <p>Main records</p>
+            </div>
+            <div class="db-table">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Device Logs</h4>
+                <p>Security tracking</p>
+            </div>
+            <div class="db-table">
+                <i class="fas fa-history"></i>
+                <h4>Audit Logs</h4>
+                <p>Activity logging</p>
+            </div>
+            <div class="db-table">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h4>Suspicious</h4>
+                <p>Fraud detection</p>
+            </div>
+            <div class="db-table">
+                <i class="fas fa-chart-pie"></i>
+                <h4>Summary</h4>
+                <p>Statistics</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Features -->
+    <section class="security" id="security">
+        <div class="section-header">
+            <h2>Fitur Keamanan</h2>
+            <p>Perlindungan berlapis untuk data dan sistem Anda</p>
+        </div>
+
+        <div class="security-features">
+            <div class="security-item">
+                <i class="fas fa-key"></i>
+                <h4>JWT Authentication</h4>
+                <p>Token-based authentication dengan 7 hari expiry dan refresh token mechanism</p>
+            </div>
+            <div class="security-item">
+                <i class="fas fa-lock-open"></i>
+                <h4>Password Hashing</h4>
+                <p>Bcryptjs dengan 10 salt rounds untuk proteksi password maksimal</p>
+            </div>
+            <div class="security-item">
+                <i class="fas fa-user-shield"></i>
+                <h4>Role-Based Access</h4>
+                <p>Admin, Dosen, Mahasiswa dengan permission granular per fitur</p>
+            </div>
+            <div class="security-item">
+                <i class="fas fa-globe"></i>
+                <h4>CORS & HTTPS</h4>
+                <p>Cross-origin protection dan enkripsi SSL/TLS untuk komunikasi aman</p>
+            </div>
+            <div class="security-item">
+                <i class="fas fa-satellite"></i>
+                <h4>GPS Spoofing Detection</h4>
+                <p>Machine learning untuk deteksi impossible movement dan fake locations</p>
+            </div>
+            <div class="security-item">
+                <i class="fas fa-book-open"></i>
+                <h4>Audit Logging</h4>
+                <p>Logging lengkap setiap aktivitas untuk compliance dan forensik</p>
+            </div>
+            <div class="security-item">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Helmet Security</h4>
+                <p>HTTP headers protection dengan helmet.js middleware</p>
+            </div>
+            <div class="security-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <h4>Rate Limiting</h4>
+                <p>Protection dari brute force attacks dan DDoS attempts</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="howitworks">
+        <div class="section-header">
+            <h2>Cara Kerja Sistem</h2>
+            <p>Proses check-in yang sederhana namun powerful</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-number">1</div>
+                    <h4>Login Secure</h4>
+                    <p>Mahasiswa login dengan email & password. Sistem mengenkripsi data dan generate JWT token</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-number">2</div>
+                    <h4>Select Class</h4>
+                    <p>Pilih kelas dari daftar yang diikuti. Sistem menampilkan informasi lokasi kelas</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-number">3</div>
+                    <h4>Enable GPS</h4>
+                    <p>Aktifkan GPS di device. Sistem mendapat lokasi real-time user (latitude, longitude)</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-number">4</div>
+                    <h4>Verify Distance</h4>
+                    <p>Hitung jarak menggunakan Haversine formula. Cek apakah user dalam radius 100m</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-number">5</div>
+                    <h4>Check Result</h4>
+                    <p>Jika dalam radius ✅ BERHASIL | Jika di luar radius ❌ DITOLAK</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-number">6</div>
+                    <h4>Log Activity</h4>
+                    <p>Simpan ke database dengan device tracking, timestamp, dan audit log otomatis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack" id="tech">
+        <div class="section-header">
+            <h2>Teknologi Modern</h2>
+            <p>Stack teknologi terbaru untuk performance dan scalability maksimal</p>
+        </div>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon"><i class="fab fa-node-js"></i></div>
+                <h3>Node.js</h3>
+                <p>Runtime JavaScript untuk backend yang cepat dan efisien</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon"><i class="fab fa-react"></i></div>
+                <h3>React.js</h3>
+                <p>Frontend library untuk UI yang responsive dan interaktif</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon"><i class="fas fa-server"></i></div>
+                <h3>Express.js</h3>
+                <p>Framework backend minimal dan fleksibel dengan middleware powerful</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon"><i class="fas fa-database"></i></div>
+                <h3>PostgreSQL</h3>
+                <p>Database relasional robust dengan fitur advanced dan trigger automation</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon"><i class="fas fa-map"></i></div>
+                <h3>Leaflet Maps</h3>
+                <p>Library pemetaan interaktif untuk visualisasi lokasi real-time</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Chart.js</h3>
+                <p>Library chart untuk visualisasi data dan statistik yang menarik</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>99.9%</h3>
+                <p>Akurasi GPS</p>
+            </div>
+            <div class="stat-item">
+                <h3>9</h3>
+                <p>Tabel Database</p>
+            </div>
+            <div class="stat-item">
+                <h3>20+</h3>
+                <p>Dependencies</p>
+            </div>
+            <div class="stat-item">
+                <h3>100ms</h3>
+                <p>Response Time</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Siap Mulai?</h2>
+        <p>Bergabunglah dengan institusi yang sudah mempercayai Promkom-D untuk manajemen absensi mereka. Setup cepat, hasil maksimal!</p>
+        <div class="cta-buttons">
+            <button class="btn btn-primary btn-cta" style="font-size: 16px;">
+                <i class="fas fa-rocket"></i> Mulai Trial Gratis
+            </button>
+            <button class="btn btn-secondary btn-cta" style="font-size: 16px;">
+                <i class="fas fa-book"></i> Baca Dokumentasi
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#"><i class="fas fa-globe"></i> Website</a>
+            <a href="#"><i class="fas fa-book"></i> Docs</a>
+            <a href="#"><i class="fas fa-envelope"></i> Support</a>
+            <a href="#"><i class="fas fa-file-contract"></i> Privacy Policy</a>
+        </div>
+        <p>&copy; 2026 Promkom-D. Sistem Absensi GPS Pintar. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll untuk navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideInLeft 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .tech-card, .security-item, .db-table').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Button hover effects
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
