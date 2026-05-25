@@ -1,1 +1,0 @@
-# Promkom-D
