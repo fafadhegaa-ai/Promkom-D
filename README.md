@@ -1,14 +1,14 @@
-SmartPresence-Kelompok-D
+# SmartPresence-Kelompok-D
 
 Kelompok D-Pemrograman Komputer-Kelas B Anggota Kelompok :
-1. Afafa Dhega Pratama                Nim.21110125140116
+1. Putra Fachrizy                     Nim.21110123140139
 2. Rayner Brilliant Panjaitan         Nim.21110125130098
-3. Grace Nova Elshaday Manurung       Nim.21110125140133
-4. Putra Fachrizy                    Nim.21110123140139
+3. Afafa Dhega Pratama                Nim.21110125140116
+4. Grace Nova Elshaday Manurung       Nim.21110125140133
 # SmartPresence
 
 ## Deskripsi
-SmartPresence adalah aplikasi absensi berbasis web yang dikembangkan menggunakan HTML, CSS, dan JavaScript dengan dukungan teknologi Artificial Intelligence (AI). Sistem ini dirancang untuk membantu proses pencatatan kehadiran secara lebih cepat, efisien, dan akurat.
+SmartPresence adalah aplikasi absensi berbasis web yang dikembangkan menggunakan HTML dengan dukungan teknologi Artificial Intelligence (AI). Sistem ini dirancang untuk membantu proses pencatatan kehadiran secara lebih cepat, efisien, dan akurat.
 
 ## Fitur Utama
 
@@ -23,8 +23,6 @@ SmartPresence adalah aplikasi absensi berbasis web yang dikembangkan menggunakan
 ## Teknologi yang Digunakan
 
 - HTML5
-- CSS3
-- JavaScript
 - AI Integration
 - GitHub
 
