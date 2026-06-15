@@ -4,10 +4,10 @@ Kelompok D-Pemrograman Komputer-Kelas B Anggota Kelompok :
 1. Afafa Dhega Pratama                Nim.21110125140116
 2. Rayner Brilliant Panjaitan         Nim.21110125130098
 3. Grace Nova Elshaday Mnurung        Nim.21110125140133
-# Promkom-D
+# SmartPresence
 
 ## Deskripsi
-Promkom-D adalah aplikasi absensi berbasis web yang dikembangkan menggunakan HTML, CSS, dan JavaScript dengan dukungan teknologi Artificial Intelligence (AI). Sistem ini dirancang untuk membantu proses pencatatan kehadiran secara lebih cepat, efisien, dan akurat.
+SmartPresence adalah aplikasi absensi berbasis web yang dikembangkan menggunakan HTML, CSS, dan JavaScript dengan dukungan teknologi Artificial Intelligence (AI). Sistem ini dirancang untuk membantu proses pencatatan kehadiran secara lebih cepat, efisien, dan akurat.
 
 ## Fitur Utama
 
@@ -31,4 +31,4 @@ Promkom-D adalah aplikasi absensi berbasis web yang dikembangkan menggunakan HTM
 
 Aplikasi ini dibuat untuk mempermudah proses absensi secara digital dengan memanfaatkan teknologi AI sehingga dapat meningkatkan efisiensi pengelolaan data kehadiran.
 
-© 2026 Promkom-D Project
+© 2026 Group-D Project
